@@ -29,5 +29,22 @@
  * @returns {number} Shipping cost, 0 for free shipping, or -1 for invalid input
  */
 export function calculateShipping(weight, country, orderTotal) {
-  // Your code here
+  if (weight <= 0 || orderTotal < 0) return -1;
+
+  const isOrderDomestic = country.toLowerCase() === "us";
+  let totalShipCost = getPerPackageCost();
+
+  function getPerPackageCost() {
+    if (weight <= 1) return isOrderDomestic ? 5 : 15;
+    else if (weight <= 5) return isOrderDomestic ? 10 : 25;
+    else return isOrderDomestic ? 15 : 40;
+  }
+
+  if (isOrderDomestic && orderTotal > 50) return 0;
+
+  if (!isOrderDomestic && orderTotal > 100) return 0;
+
+  return totalShipCost;
 }
+
+calculateShipping(5, "UK", 100);

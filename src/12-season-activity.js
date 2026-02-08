@@ -31,5 +31,32 @@
  * @returns {{ season: string, activity: string } | null}
  */
 export function getSeasonActivity(month, temperature) {
-  // Your code here
+  if (!Number.isInteger(month) || month < 1 || month > 12) return null;
+
+  const seasonedMonths = {
+    Winter: [12, 1, 2],
+    Spring: [3, 4, 5],
+    Summer: [6, 7, 8],
+    Autumn: [9, 10, 11],
+  };
+  let currentSeason, suggestedActivity;
+
+  if (seasonedMonths.Winter.includes(month)) {
+    currentSeason = "Winter";
+    suggestedActivity = temperature < 0 ? "skiing" : "ice skating";
+  } else if (seasonedMonths.Spring.includes(month)) {
+    currentSeason = "Spring";
+    suggestedActivity = temperature > 20 ? "hiking" : "museum visit";
+  } else if (seasonedMonths.Summer.includes(month)) {
+    currentSeason = "Summer";
+    suggestedActivity = temperature > 35 ? "swimming" : "cycling";
+  } else {
+    currentSeason = "Autumn";
+    suggestedActivity = temperature > 15 ? "nature walk" : "reading at a cafe";
+  }
+
+  return {
+    season: currentSeason,
+    activity: suggestedActivity,
+  };
 }
